@@ -1,12 +1,10 @@
 public class AndGate implements Gate
 {
-  private boolean bool1;
-  private boolean bool2;
+  private Sprite sprite;
   
-  public AndGate(boolean uno, boolean dos)
+  public AndGate(int x, int y, String s)
   {
-    bool1 = uno;
-    bool2 = dos;
+      sprite = setSprite(x, y, s);
   }  
   
   public boolean output(boolean a, boolean b)
