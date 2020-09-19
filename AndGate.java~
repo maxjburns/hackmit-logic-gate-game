@@ -1,0 +1,17 @@
+public class AndGate extends Sprite implements Gate
+{
+  private boolean bool1;
+  private boolean bool2;
+  
+  public AndGate(boolean uno, boolean dos)
+  {
+    bool1 = uno;
+    bool2 = dos;
+  }  
+  
+  public boolean output(boolean a, boolean b)
+  {
+    return a && b;
+  }  
+}  
+  

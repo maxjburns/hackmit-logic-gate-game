@@ -1,0 +1,4 @@
+public interface Gate
+{
+  public boolean output(boolean a, boolean b);
+}  
