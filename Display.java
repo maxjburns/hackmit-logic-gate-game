@@ -137,8 +137,17 @@ public class Display extends JPanel implements ActionListener, MouseListener
         }
         System.out.println();
         }*/
-        
-        try 
+        for (int i= 0; i < numInputs; i++)
+        {
+           Monster m = new Monster(truthTable[i], 0, height*(i+1)/(numInputs+1)-50, truthTable[i]?"Fuzzy":"Wuzzy");
+           monsters.add(m);
+        }
+        monsters.add(new Monster(truthTable[numInputs], width-100, gateLocs[gateLocs.length-1].getY()*(height)/map[0].length-50, truthTable[numInputs]?"Fuzzy":"Wuzzy"));
+        for (Monster m : monsters)
+        {
+            m.getSprite().resize(100,100);
+        }
+        /*try 
         {
           BufferedReader in = new BufferedReader(new FileReader("level" + level + ".txt"));
           level++;
@@ -179,7 +188,7 @@ public class Display extends JPanel implements ActionListener, MouseListener
         catch (Exception e)
         {
           System.out.println(e);
-        }  
+        }  */
 
     }
 
