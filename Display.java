@@ -87,6 +87,7 @@ public class Display extends JPanel implements ActionListener, MouseListener
         this.gateLocs = gateLocs;
         for (Location gate: gateLocs)
         {
+          System.out.println(gate);
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -143,26 +144,41 @@ public class Display extends JPanel implements ActionListener, MouseListener
           level++;
           String line = in.readLine(); //line is the number of inputs
           line = in.readLine(); //line is now the inputs
-          for (int i =0; i < line.length(); i = i + 2)
+          for (int i =0; i < line.length()-2; i = i + 2)
           {
             int input = Integer.parseInt(line.substring(i,i+1)); //this is the type of monster, 0 for wuzzy, 1 for fuzzy
             System.out.println("input " + input);
             Location loc = nodes[i];
             System.out.println("location " + loc);
+            Monster m;
             if (input == 1)
             {
-              monsters.add(new Monster(FUZZY, 0, loc.getY(), "Fuzzy"));
+              m = new Monster(FUZZY, 0, loc.getY(), "Fuzzy");
             }  
             else
             {
-              monsters.add(new Monster(WUZZY, 0, loc.getY(), "Wuzzy"));
+              m = new Monster(WUZZY, 0, loc.getY(), "Wuzzy");
             }  
+            monsters.add(m);
+            m.getSprite().resize(100,100);
           } 
+          int output = Integer.parseInt(line.substring(line.length()-1, line.length()));
+          Monster outMons;
+          if (output == 1)
+            {
+              outMons = new Monster(FUZZY, width-1, nodes[nodes.length-1].getY(), "Fuzzy");
+            }  
+            else
+            {
+              outMons = new Monster(WUZZY, width-1, nodes[nodes.length-1].getY(), "Wuzzy");
+            } 
+            monsters.add(outMons);
+            outMons.getSprite().resize(100,100);
           in.close();
         }
         catch (Exception e)
         {
-          System.out.println("good job catching something");
+          System.out.println(e);
         }  
 
     }
