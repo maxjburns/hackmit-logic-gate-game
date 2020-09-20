@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.IOException;
@@ -13,10 +13,12 @@ import javax.swing.Timer;
 import java.util.*;
 import java.io.*;
 
-public class Display extends JPanel implements ActionListener, KeyListener
+public class Display extends JPanel implements ActionListener, MouseListener
 {
     private Image background;
-
+    private boolean[][] map; //30x40
+    
+    
     public Display(int WIDTH, int HEIGHT) {
         JFrame frame = new JFrame();
 
@@ -35,19 +37,20 @@ public class Display extends JPanel implements ActionListener, KeyListener
         }
         catch (Exception e)
         {
-            throw new RuntimeException("probably file not found, if not try getting latest one from github");
+            throw new RuntimeException("Image not found");
         }
-        
-        background = rawBackground.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_DEFAULT);;
- 
-        
-        addKeyListener(this);
 
+        background = rawBackground.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_DEFAULT);
+
+        addMouseListener(this);
         setFocusable(true);
-
         setFocusTraversalKeysEnabled(false);
-
         repaint();
+    }
+
+    public void loadLevel(int numInputs, boolean[] truthTable, Location[] gateLocs)
+    {
+
     }
 
     public void paintComponent(Graphics g)
@@ -59,7 +62,7 @@ public class Display extends JPanel implements ActionListener, KeyListener
         //g.drawLine(0,0,100,100);
         //System.out.println("here");
         g.drawImage(background, 0, 0, this); //paints background
-       // System.out.println("here");
+        // System.out.println("here");
     }
 
     public void actionPerformed(ActionEvent actionEvent)
@@ -67,18 +70,23 @@ public class Display extends JPanel implements ActionListener, KeyListener
         //not implemented
     }
 
-    public void keyTyped(KeyEvent keyEvent)
-    {
+    public void mousePressed(MouseEvent e) {
+        
+    }
+
+    public void mouseReleased(MouseEvent e) {
 
     }
 
-    public void keyPressed(KeyEvent e)
-    {
+    public void mouseEntered(MouseEvent e) {
 
     }
 
-    public void keyReleased(KeyEvent keyEvent)
-    {
+    public void mouseExited(MouseEvent e) {
 
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        
     }
 }
