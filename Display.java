@@ -94,11 +94,32 @@ public class Display extends JPanel implements ActionListener, MouseListener
     {
       int x = e.getX();
       int y = e.getY();
-      //AND, OR, NAND, NOR
+      
+      JFrame f = new JFrame(); //creates jframe f
+      
+      Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //this is your screen size
+      
+      f.setUndecorated(true); //removes the surrounding border
+      
+      ImageIcon image = new ImageIcon("filtOR-500.png"); //imports the image
+      
+      JLabel lbl = new JLabel(image); //puts the image into a jlabel
+      
+      f.getContentPane().add(lbl); //puts label inside the jframe
+      
+      f.setSize(500, 500); //gets h and w of image and sets jframe to the size
+      
+      int xd = (screenSize.width - f.getSize().width)/2; //These two lines are the dimensions
+      int yd = (screenSize.height - f.getSize().height)/2;//of the center of the screen
+      
+      f.setLocation(xd, yd); //sets the location of the jframe
+      f.setVisible(true); //makes the jframe visible
+        
       if (y > height - 100)
       {
         if (x < width/4) //AND
         {
+          
         }  
         else if (x < width/2) //OR
         {
