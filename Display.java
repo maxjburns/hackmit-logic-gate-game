@@ -15,8 +15,8 @@ import java.io.*;
 
 public class Display extends JPanel implements ActionListener, MouseListener
 {
-  public static final boolean FUZZY = true;
-  public static final boolean WUZZY = false;
+    public static final boolean FUZZY = true;
+    public static final boolean WUZZY = false;
   
     private Image background;
     private int[][] map = new int[60][30]; //60x30
@@ -26,8 +26,8 @@ public class Display extends JPanel implements ActionListener, MouseListener
     private ArrayList<Monster> monsters;
     private ArrayList<Gate> gates;
     private int width, height;
-    private int level;
     private Gate selectedGate;
+    private int level;
 
     public Display(int WIDTH, int HEIGHT) {
         JFrame frame = new JFrame();
@@ -293,29 +293,38 @@ public class Display extends JPanel implements ActionListener, MouseListener
         //f.setUndecorated(true); //removes the surrounding border
         ImageIcon imageIcon;
 
+        for (int i = 0; i < gates.size(); i++)
+        {
+            Gate gate = gates.get(i);
+            if (y<height - 100 && x>gate.getSprite().getX()-30 &&x<gate.getSprite().getX()+90 && y>gate.getSprite().getY()-30 && y<gate.getSprite().getY()+90)
+            {
+                gates.remove(i);
+            }
+        }
+        
         if (y > height - 100)
         {
             if (x < width/4) //AND
             {
-                selectedGate = new AndGate(WIDTH/8-30, HEIGHT-50-30, "col-AND-er");
+                selectedGate = new AndGate(width/8-30, height-50-30, "col-AND-er");
                 selectedGate.getSprite().resize(60, 60);
                 imageIcon = new ImageIcon("AndTruth Table.png"); //imports the image
             }  
             else if (x < width/2) //OR
             {
-                selectedGate = new AndGate(3*WIDTH/8-30, HEIGHT-50-30, "filtOR-500");
+                selectedGate = new AndGate(3*width/8-30, height-50-30, "filtOR-500");
                 selectedGate.getSprite().resize(60, 60);
                 imageIcon = new ImageIcon("OrTruthTable.png"); //imports the image
             }
             else if (x < 3*width/4) //NAND
             {
-                selectedGate = new AndGate(5*WIDTH/8-30, HEIGHT-50-30, "NOT_colANDer");
+                selectedGate = new AndGate(5*width/8-30, height-50-30, "NOT_colANDer");
                 selectedGate.getSprite().resize(60, 60);
                 imageIcon = new ImageIcon("NOTcolANDer-TruthTable.png"); //imports the image
             }  
             else //NOR
             {
-                selectedGate = new AndGate(7*WIDTH/8-30, HEIGHT-50-30, "NOT_filtOR-500");
+                selectedGate = new AndGate(7*width/8-30, height-50-30, "NOT_filtOR-500");
                 selectedGate.getSprite().resize(60, 60);
                 imageIcon = new ImageIcon("NOTfiltOR500-TruthTable.png"); //imports the image
             }  
@@ -338,11 +347,11 @@ public class Display extends JPanel implements ActionListener, MouseListener
 
             System.out.println("bruh where'd you go");
         }
-        else if (selectedGate!= null && map[x*map.length/WIDTH][y*map[0].length/HEIGHT]==2)
+        else if (selectedGate!= null && map[x*map.length/width][y*map[0].length/height]==2)
         {
             System.out.println("clicked square");
-            int gridX = x*map.length/WIDTH;
-            int gridY = y*map[0].length/HEIGHT;
+            int gridX = x*map.length/width;
+            int gridY = y*map[0].length/height;
             while (map[gridX-1][gridY]==2)
             {
                 gridX--;
@@ -352,8 +361,9 @@ public class Display extends JPanel implements ActionListener, MouseListener
                 gridY--;
             }
             
-            selectedGate.getSprite().setLocation(gridX*WIDTH/map.length, gridY*HEIGHT/map[0].length);
+            selectedGate.getSprite().setLocation(gridX*width/map.length, gridY*height/map[0].length);
             gates.add(selectedGate); 
+            selectedGate = null;
         }
       
     }
