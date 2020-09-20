@@ -22,14 +22,21 @@ public class Game
     private static Display d;
     
     public static void main(String[] args) throws IOException
-    {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        WIDTH = (int) (screenSize.getWidth()*3/4);
-        HEIGHT = (int) (screenSize.getHeight()*3/4); //scales to size of screen
-
-        level = 1;
-        d = new Display(WIDTH, HEIGHT);
+    {    
+      Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+      WIDTH = (int) (screenSize.getWidth()*3/4);
+      HEIGHT = (int) (screenSize.getHeight()*3/4); //scales to size of screen
+      
+      level = 1;
+      d = new Display(WIDTH, HEIGHT);
         
+      Thread t = new MyThread(d);
+      try
+      {  
+        Thread.sleep(60);
+      }
+      catch(Exception e) {}
+      t.start(); 
     }
 
     public Game(Monster[] ms, Monster m)
