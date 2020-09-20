@@ -15,6 +15,9 @@ import java.io.*;
 
 public class Display extends JPanel implements ActionListener, MouseListener
 {
+  public static final boolean FUZZY = true;
+  public static final boolean WUZZY = false;
+  
     private Image background;
     private int[][] map = new int[60][30]; //60x30
     private int numInputs, gridSize;
@@ -23,6 +26,7 @@ public class Display extends JPanel implements ActionListener, MouseListener
     private ArrayList<Monster> monsters;
     private ArrayList<Gate> gates;
     private int width, height;
+    private int level;
     
     public Display(int WIDTH, int HEIGHT) {
         JFrame frame = new JFrame();
@@ -58,6 +62,8 @@ public class Display extends JPanel implements ActionListener, MouseListener
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         repaint();
+        
+        level = 1;
     }
 
     public void loadLevel(int numInputs, boolean[] truthTable, Location[] gateLocs)
@@ -117,6 +123,35 @@ public class Display extends JPanel implements ActionListener, MouseListener
             }
             System.out.println();
         }*/
+        
+        try 
+        {
+          BufferedReader in = new BufferedReader(new FileReader("level" + level + ".txt"));
+          level++;
+          String line = in.readLine(); //line is the number of inputs
+          line = in.readLine(); //line is now the inputs
+          for (int i =0; i < line.length(); i = i + 2)
+          {
+            int input = Integer.parseInt(line.substring(i,i+1)); //this is the type of monster, 0 for wuzzy, 1 for fuzzy
+            System.out.println("input " + input);
+            Location loc = nodes[i];
+            System.out.println("location " + loc);
+            if (input == 1)
+            {
+              monsters.add(new Monster(FUZZY, loc.getX(), loc.getY(), "Fuzzy"));
+            }  
+            else
+            {
+              monsters.add(new Monster(WUZZY, loc.getX(), loc.getY(), "Wuzzy"));
+            }  
+          } 
+          in.close();
+        }
+        catch (Exception e)
+        {
+          System.out.println("good job catching something");
+        }  
+
     }
 
     public void drawLine(Location loc1, Location loc2)

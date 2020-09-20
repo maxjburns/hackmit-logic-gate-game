@@ -29,7 +29,7 @@ public class Game
       
       level = 1;
       d = new Display(WIDTH, HEIGHT);
-      new Game("Sample.txt");
+      new Game("sample.txt");
       Thread t = new MyThread(d);
       t.start(); 
     }
