@@ -237,15 +237,15 @@ public class Display extends JPanel implements ActionListener, MouseListener
         }  
         else if (x < width/2) //OR
         {
-          imageIcon = new ImageIcon("OrTruth Table.png"); //imports the image
+          imageIcon = new ImageIcon("OrTruthTable.png"); //imports the image
         }
         else if (x < 3*width/4) //NAND
         {
-          imageIcon = new ImageIcon("NOTcolANDer-TruthTable.ong");
+          imageIcon = new ImageIcon("NOTcolANDer-TruthTable.png"); //imports the image
         }  
         else //NOR
         {
-          imageIcon = new ImageIcon("NOTfiltOR500-TruthTable.png");
+          imageIcon = new ImageIcon("NOTfiltOR500-TruthTable.png"); //imports the image
         }  
         
         Image image = imageIcon.getImage(); // transform it 
