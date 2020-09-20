@@ -29,7 +29,7 @@ public class Game
       
       level = 1;
       d = new Display(WIDTH, HEIGHT);
-        
+      new Game("Sample.txt");
       Thread t = new MyThread(d);
       t.start(); 
     }
@@ -49,12 +49,19 @@ public class Game
             BufferedReader br = new BufferedReader(new FileReader(levelFile));
             numInputs = Integer.parseInt(br.readLine());
             
-            truthTable = new boolean[(int) Math.pow(2, numInputs)];
+            /*truthTable = new boolean[(int) Math.pow(2, numInputs)];
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int i = 0; i < truthTable.length; i++)
+            {
+                truthTable[i] = (1 == Integer.parseInt(st.nextToken()));
+            }*/
+            truthTable = new boolean[numInputs+1];
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int i = 0; i < truthTable.length; i++)
             {
                 truthTable[i] = (1 == Integer.parseInt(st.nextToken()));
             }
+            
             
             numGates = Integer.parseInt(br.readLine());
             
