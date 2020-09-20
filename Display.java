@@ -28,7 +28,9 @@ public class Display extends JPanel implements ActionListener, MouseListener
     private int width, height;
     private Gate selectedGate;
     private int level;
-
+    private boolean checking;
+    
+    
     public Display(int WIDTH, int HEIGHT) {
         JFrame frame = new JFrame();
 
@@ -41,6 +43,17 @@ public class Display extends JPanel implements ActionListener, MouseListener
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.getContentPane().add();
         frame.add(this);
+        JButton checkSolution = new JButton("Check Solution");
+        checkSolution.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+             // this makes sure the button you are pressing is the button variable
+             if(e.getSource() == checkSolution) {
+                 checking = true;
+              }
+            }
+        }
+        );
+        this.add(checkSolution);
         frame.setVisible(true);
 
         BufferedImage rawBackground = null;
@@ -270,7 +283,10 @@ public class Display extends JPanel implements ActionListener, MouseListener
 
     public void actionPerformed(ActionEvent actionEvent)
     {
-        //not implemented
+        if (checking)
+        {
+            
+        }
     }
 
     public void mousePressed(MouseEvent e) {
