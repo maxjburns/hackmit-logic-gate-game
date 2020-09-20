@@ -23,7 +23,8 @@ public class Display extends JPanel implements ActionListener, MouseListener
     private ArrayList<Monster> monsters;
     private ArrayList<Gate> gates;
     private int width, height;
-    
+    private Gate selectedGate;
+
     public Display(int WIDTH, int HEIGHT) {
         JFrame frame = new JFrame();
 
@@ -50,10 +51,21 @@ public class Display extends JPanel implements ActionListener, MouseListener
         background = rawBackground.getScaledInstance(WIDTH, HEIGHT-100, Image.SCALE_DEFAULT);
         monsters = new ArrayList<Monster>();
         gates = new ArrayList<Gate>();
+        int dx = 60;//3*WIDTH/map.length;
+        int dy = 60;//3*WIDTH/map.length;
+        gates.add(new AndGate(WIDTH/8-dx/2, HEIGHT-50-dy/2, "col-AND-er"));
+        gates.get(gates.size()-1).getSprite().resize(dx, dy);
+        gates.add(new OrGate(3*WIDTH/8-dx/2, HEIGHT-50-dy/2, "filtOR-500"));
+        gates.get(gates.size()-1).getSprite().resize(dx, dy);
+        gates.add(new NandGate(5*WIDTH/8-dx/2, HEIGHT-50-dy/2, "NOT_colANDer"));
+        gates.get(gates.size()-1).getSprite().resize(dx, dy);
+        gates.add(new NorGate(7*WIDTH/8-dx/2, HEIGHT-50-dy/2, "NOT_filtOR-500"));
+        gates.get(gates.size()-1).getSprite().resize(dx, dy);
         
         height = HEIGHT;
         width = WIDTH;
-        
+        selectedGate = null;
+
         addMouseListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -62,6 +74,7 @@ public class Display extends JPanel implements ActionListener, MouseListener
 
     public void loadLevel(int numInputs, boolean[] truthTable, Location[] gateLocs)
     {
+        selectedGate = null;
         map = new int[60][30];
         this.numInputs = numInputs;
         this.truthTable = truthTable;
@@ -108,14 +121,14 @@ public class Display extends JPanel implements ActionListener, MouseListener
 
         /*for (int y = 0; y < map[0].length; y++)
         {
-            for (int x= 0; x < map.length; x++)
-            {
-                if (map[x][y] ==0)
-                    System.out.print(". ");
-                else
-                    System.out.print(map[x][y] + " ");
-            }
-            System.out.println();
+        for (int x= 0; x < map.length; x++)
+        {
+        if (map[x][y] ==0)
+        System.out.print(". ");
+        else
+        System.out.print(map[x][y] + " ");
+        }
+        System.out.println();
         }*/
     }
 
@@ -218,54 +231,79 @@ public class Display extends JPanel implements ActionListener, MouseListener
 
     public void mouseClicked(MouseEvent e) 
     {
-      int x = e.getX();
-      int y = e.getY();
-      
-      System.out.println("bruh are you here");
-      JFrame f = new JFrame(); //creates jframe f
-      
-      Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //this is your screen size
-      
-      //f.setUndecorated(true); //removes the surrounding border
-      ImageIcon imageIcon;
-        
-      if (y > height - 100)
-      {
-        if (x < width/4) //AND
+        int x = e.getX();
+        int y = e.getY();
+
+        System.out.println("bruh are you here");
+        JFrame f = new JFrame(); //creates jframe f
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //this is your screen size
+
+        //f.setUndecorated(true); //removes the surrounding border
+        ImageIcon imageIcon;
+
+        if (y > height - 100)
         {
-          imageIcon = new ImageIcon("AndTruth Table.png"); //imports the image
-        }  
-        else if (x < width/2) //OR
-        {
-          imageIcon = new ImageIcon("OrTruthTable.png"); //imports the image
+            if (x < width/4) //AND
+            {
+                selectedGate = new AndGate(WIDTH/8-30, HEIGHT-50-30, "col-AND-er");
+                selectedGate.getSprite().resize(60, 60);
+                imageIcon = new ImageIcon("AndTruth Table.png"); //imports the image
+            }  
+            else if (x < width/2) //OR
+            {
+                selectedGate = new AndGate(3*WIDTH/8-30, HEIGHT-50-30, "filtOR-500");
+                selectedGate.getSprite().resize(60, 60);
+                imageIcon = new ImageIcon("OrTruthTable.png"); //imports the image
+            }
+            else if (x < 3*width/4) //NAND
+            {
+                selectedGate = new AndGate(5*WIDTH/8-30, HEIGHT-50-30, "NOT_colANDer");
+                selectedGate.getSprite().resize(60, 60);
+                imageIcon = new ImageIcon("NOTcolANDer-TruthTable.png"); //imports the image
+            }  
+            else //NOR
+            {
+                selectedGate = new AndGate(7*WIDTH/8-30, HEIGHT-50-30, "NOT_filtOR-500");
+                selectedGate.getSprite().resize(60, 60);
+                imageIcon = new ImageIcon("NOTfiltOR500-TruthTable.png"); //imports the image
+            }  
+
+            Image image = imageIcon.getImage(); // transform it 
+            Image newimg = image.getScaledInstance(550, 660,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+            imageIcon = new ImageIcon(newimg);  // transform it back
+
+            JLabel lbl = new JLabel(imageIcon); //puts the image into a jlabel
+
+            f.getContentPane().add(lbl); //puts label inside the jframe
+
+            f.setSize(500, 600); //gets h and w of image and sets jframe to the size
+
+            int xd = (screenSize.width - f.getSize().width)/2; //These two lines are the dimensions
+            int yd = (screenSize.height - f.getSize().height)/2;//of the center of the screen
+
+            f.setLocation(xd, yd); //sets the location of the jframe
+            f.setVisible(true); //makes the jframe visible
+
+            System.out.println("bruh where'd you go");
         }
-        else if (x < 3*width/4) //NAND
+        else if (selectedGate!= null && map[x*map.length/WIDTH][y*map[0].length/HEIGHT]==2)
         {
-          imageIcon = new ImageIcon("NOTcolANDer-TruthTable.png"); //imports the image
-        }  
-        else //NOR
-        {
-          imageIcon = new ImageIcon("NOTfiltOR500-TruthTable.png"); //imports the image
-        }  
-        
-        Image image = imageIcon.getImage(); // transform it 
-        Image newimg = image.getScaledInstance(550, 660,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-        imageIcon = new ImageIcon(newimg);  // transform it back
-        
-        JLabel lbl = new JLabel(imageIcon); //puts the image into a jlabel
-        
-        f.getContentPane().add(lbl); //puts label inside the jframe
-        
-        f.setSize(500, 600); //gets h and w of image and sets jframe to the size
-        
-        int xd = (screenSize.width - f.getSize().width)/2; //These two lines are the dimensions
-        int yd = (screenSize.height - f.getSize().height)/2;//of the center of the screen
-        
-        f.setLocation(xd, yd); //sets the location of the jframe
-        f.setVisible(true); //makes the jframe visible
-        
-        System.out.println("bruh where'd you go");
-      }
+            System.out.println("clicked square");
+            int gridX = x*map.length/WIDTH;
+            int gridY = y*map[0].length/HEIGHT;
+            while (map[gridX-1][gridY]==2)
+            {
+                gridX--;
+            }
+            while (map[gridX][gridY-1]==2)
+            {
+                gridY--;
+            }
+            
+            selectedGate.getSprite().setLocation(gridX*WIDTH/map.length, gridY*HEIGHT/map[0].length);
+            gates.add(selectedGate); 
+        }
       
     }
 }

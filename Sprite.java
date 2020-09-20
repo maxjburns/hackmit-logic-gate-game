@@ -8,13 +8,15 @@ public class Sprite
 {
     private int x;
     private int y;
-    private BufferedImage image;
+    private Image image;
+    private String s;
 
     public Sprite(int xCoor, int yCoor, String s)
     {
         x = xCoor;
         y = yCoor;
         image = loadSprite(s);
+        this.s = s;
     }  
 
     public BufferedImage loadSprite(String file) {
@@ -29,6 +31,11 @@ public class Sprite
 
         return sprite;
     }
+    
+    public void resize(int width, int height)
+    {
+        image = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+    }
 
     public void setLocation(int xNew, int yNew)
     {
@@ -36,7 +43,7 @@ public class Sprite
         y = yNew;
     }  
 
-    public BufferedImage getImage()
+    public Image getImage()
     {
         return image;
     }
@@ -50,4 +57,10 @@ public class Sprite
     {
         return y;   
     }
+    
+    public String getString()
+    {
+        return s;
+    }
+   
 }  
