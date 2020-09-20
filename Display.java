@@ -17,6 +17,8 @@ public class Display extends JPanel implements ActionListener, MouseListener
 {
     private Image background;
     private boolean[][] map; //30x40
+    private int height;
+    private int width;
     
     
     public Display(int WIDTH, int HEIGHT) {
@@ -41,6 +43,8 @@ public class Display extends JPanel implements ActionListener, MouseListener
         }
 
         background = rawBackground.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_DEFAULT);
+        height = HEIGHT;
+        width = WIDTH;
 
         addMouseListener(this);
         setFocusable(true);
@@ -86,7 +90,26 @@ public class Display extends JPanel implements ActionListener, MouseListener
 
     }
 
-    public void mouseClicked(MouseEvent e) {
-        
+    public void mouseClicked(MouseEvent e) 
+    {
+      int x = e.getX();
+      int y = e.getY();
+      //AND, OR, NAND, NOR
+      if (y > height - 100)
+      {
+        if (x < width/4) //AND
+        {
+        }  
+        else if (x < width/2) //OR
+        {
+        }
+        else if (x < 3*width/4) //NAND
+        {
+        }  
+        else //NOR
+        {
+        }  
+      }
+      
     }
 }
