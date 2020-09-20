@@ -3,6 +3,7 @@ public class Monster
   public static final boolean FUZZY = true;
   public static final boolean WUZZY = false;
   
+  
   private boolean nature;
   private Sprite sprite;
   
@@ -16,4 +17,9 @@ public class Monster
   {
     return new Sprite(xCoor, yCoor, s);
   }  
+  
+  public Sprite getSprite()
+  {
+      return sprite;
+  }
 }  

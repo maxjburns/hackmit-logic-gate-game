@@ -31,11 +31,6 @@ public class Game
       d = new Display(WIDTH, HEIGHT);
         
       Thread t = new MyThread(d);
-      try
-      {  
-        Thread.sleep(60);
-      }
-      catch(Exception e) {}
       t.start(); 
     }
 

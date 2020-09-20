@@ -18,7 +18,7 @@ public class Sprite
     }  
 
     public BufferedImage loadSprite(String file) {
-        
+
         BufferedImage sprite = null;
 
         try {
@@ -35,4 +35,19 @@ public class Sprite
         x = xNew;
         y = yNew;
     }  
+
+    public BufferedImage getImage()
+    {
+        return image;
+    }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public int getY()
+    {
+        return y;   
+    }
 }  

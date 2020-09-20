@@ -16,5 +16,10 @@ public class AndGate implements Gate
   {
     return new Sprite(xCoor, yCoor, s);
   }  
+  
+  public Sprite getSprite()
+  {
+      return sprite;
+  }
 }  
   
